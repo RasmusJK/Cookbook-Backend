@@ -1,3 +1,3 @@
 import recipeResolver from "./recipeResolver.js";
-
-export default [recipeResolver]
+import ingredientsResolver from "./ingredientsResolver.js"
+export default [recipeResolver,ingredientsResolver]

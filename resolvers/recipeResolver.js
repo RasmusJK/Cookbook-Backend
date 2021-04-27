@@ -13,6 +13,13 @@ export default {
         }
 
     },
+    Mutation: {
+        addRecipe: (parent, args) => {
+            console.log('recipeResolver. addRecipe',args );
 
+            const newRecipe = new Recipe(args);
+            return newRecipe.save()
+        }
+    }
 
 };
