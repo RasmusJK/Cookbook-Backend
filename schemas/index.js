@@ -1,7 +1,7 @@
 'use strict';
 import {gql} from 'apollo-server-express';
 import recipeSchema from "./recipeSchema.js";
-
+import userSchema from "./userSchema.js";
 const linkSchema = gql`
    type Query {
      _: Boolean
@@ -15,5 +15,5 @@ const linkSchema = gql`
 export default [
     linkSchema,
     recipeSchema,
-
+    userSchema
 ];

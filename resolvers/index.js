@@ -1,2 +1,3 @@
 import recipeResolver from "./recipeResolver.js";
-export default [recipeResolver]
+import userResolver from "./userResolver.js";
+export default [recipeResolver,userResolver]
