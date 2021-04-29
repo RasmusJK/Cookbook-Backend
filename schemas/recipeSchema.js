@@ -11,13 +11,13 @@ export default gql`
    type Recipe {
       id: ID
       recipeName: String
-      ingredients: Ingredients
+      ingredients: [String]
       steps: [String]
    }
    extend type Mutation {
    addRecipe(
     recipeName: String
-    ingredients: ID
+    ingredients: [String]
     steps: [String]
    ): Recipe
    }
