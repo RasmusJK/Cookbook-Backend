@@ -10,6 +10,9 @@ export default {
         },
         recipe: (parent,args) => {
             return Recipe.findById(args.id);
+        },
+        recipesByUser:(parent,args) =>{
+          return Recipe.find().where('author').equals(args.author);
         }
 
     },

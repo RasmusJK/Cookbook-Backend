@@ -5,7 +5,7 @@ export default gql`
      recipes: [Recipe]
      
      recipe(id:ID!):Recipe
-     
+     recipesByUser(author: String):[Recipe]
    }
    
    type Recipe {
