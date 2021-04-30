@@ -4,7 +4,6 @@ import passport from './strategy.js';
 
 const login = (req, res) => {
     return new Promise((resolve, reject) => {
-        console.log('rq', req.body);
         passport.authenticate('local', {session: false},
             async (err, user, info) => {
                 try {
@@ -18,7 +17,6 @@ const login = (req, res) => {
                         }
                         // generate a signed son web token with the contents of user object and return it in the response
                         const token = jwt.sign(user, 'asd123');
-                        console.log('21',user,token)
                         resolve({user, token});
                     });
                 } catch (e) {

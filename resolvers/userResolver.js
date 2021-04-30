@@ -19,7 +19,7 @@ export default {
                 const authResponse = await login(req, res);
                 console.log('authResponse', authResponse);
                 return {
-                    id: authResponse.user.id,
+                    id: authResponse.user._id,
                     username: authResponse.user.username,
                     token: authResponse.token,
                 };

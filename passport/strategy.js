@@ -9,7 +9,6 @@ const ExtractJWT = passportJWT.ExtractJwt;
 // local strategy for username password login
 passport.use(new Strategy(
     async (username, password, done) => {
-        console.log('username', username);
         try {
 
             const user = await User.findOne({ username });
@@ -24,7 +23,6 @@ passport.use(new Strategy(
 
             const strippedUser = user.toObject();
             delete strippedUser.password;
-            console.log('deleted pwd', strippedUser);
 
             return done(null, strippedUser, {message: 'Logged In Successfully'});
         } catch (err) {
@@ -45,7 +43,6 @@ passport.use(new JWTStrategy({
 
             const user = await User.findById(jwtPayload._id,
                 '-password -__v');
-            console.log('pl user', user);
 
 
             if (user !== null) {

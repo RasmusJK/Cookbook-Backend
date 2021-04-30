@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 const recipeSchema = new Schema({
     recipeName: String,
     ingredients: [String],
-    steps: [String]
+    steps: [String],
+    author: String,
 });
 
 export default mongoose.model('Recipe', recipeSchema);
