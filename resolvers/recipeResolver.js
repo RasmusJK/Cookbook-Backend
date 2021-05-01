@@ -1,4 +1,5 @@
 import Recipe from '../models/recipe.js';
+import {AuthenticationError} from "apollo-server-express";
 
 
 
@@ -17,8 +18,11 @@ export default {
 
     },
     Mutation: {
-        addRecipe: (parent, args) => {
+        addRecipe: (parent, args,{user}) => {
             console.log('recipeResolver. addRecipe',args );
+            if(!user){
+                throw new AuthenticationError('Not authenticated');
+            }
 
             const newRecipe = new Recipe(args);
             return newRecipe.save()
