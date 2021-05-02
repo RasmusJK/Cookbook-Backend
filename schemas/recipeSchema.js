@@ -14,10 +14,10 @@ export default gql`
       ingredients: [String]
       steps: [String]
       author: String
-      File: String
+      file: String
    }
   input Image {
-    File: Upload
+    file: Upload
     }
    
    extend type Mutation {
@@ -26,7 +26,7 @@ export default gql`
     ingredients: [String]
     steps: [String]
     author: String
-    File: Image
+    file: Image
    ): Recipe
    }
    

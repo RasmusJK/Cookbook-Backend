@@ -2,9 +2,9 @@ import Recipe from '../models/recipe.js';
 import {AuthenticationError} from "apollo-server-express";
 import fs from 'fs';
 import path from 'path';
-import { GraphQLUpload } from 'graphql-upload';
 
-import { fileURLToPath } from 'url';
+import {fileURLToPath} from 'url';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -32,7 +32,7 @@ export default {
             }
 
             try {
-                if (!args.File.File){
+                if (!args.file.file){
                     console.log("without files",args);
 
                     const newRecipe = new Recipe(args);
@@ -54,21 +54,17 @@ export default {
                     let newRecipe = new Recipe(recipe);
                     return await newRecipe.save();
 */
-                    console.log('addEntry args', args);
 
-                    let {filename, createReadStream} = await args.File.File;
-                    console.log(filename);
+                    let {filename, createReadStream} = await args.file.file;
                     const stream = createReadStream();
                     const pathName = path.join(__dirname,`/../public/images/${filename}`);
-                    console.log('pathname', pathName);
                     await stream.pipe(fs.createWriteStream(pathName));
-                    const photourl = {
+                    const imageUrl = {
                         url: `http://localhost:3000/images/${filename}`
                     };
-                    let entry = {...args, File: photourl.url};
-                    let newEntry = new Recipe(entry);
-                    const rslt = await newEntry.save();
-                    return rslt;
+                    let entry = {...args, file: imageUrl.url};
+                    let newRecipe = new Recipe(entry);
+                    return await newRecipe.save();
                 }
 
             } catch (e){
