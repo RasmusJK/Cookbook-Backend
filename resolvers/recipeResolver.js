@@ -57,10 +57,12 @@ export default {
 
                     let {filename, createReadStream} = await args.file.file;
                     const stream = createReadStream();
-                    const pathName = path.join(__dirname,`/../public/images/${filename}`);
+                  //  const pathName = path.join(__dirname,`/../public/images/${filename}`);
+                    const pathName = path.join(`/home/jelastic/ROOT/public/images/${filename}`);
                     await stream.pipe(fs.createWriteStream(pathName));
                     const imageUrl = {
-                        url: `http://localhost:3000/images/${filename}`
+                       // url: `http://localhost:3000/images/${filename}`
+                        url: `https://my-app-123.jelastic.metropolia.fi/${filename}`
                     };
                     let entry = {...args, file: imageUrl.url};
                     let newRecipe = new Recipe(entry);
