@@ -4,8 +4,11 @@ import schemas from './schemas/index.js';
 import resolvers from './resolvers/index.js';
 import express from 'express';
 import db from './db/db.js'
+
 import {checkAuth} from "./passport/authenticate.js";
 import cors from 'cors';
+import helmet from 'helmet';
+
 (async () => {
     try {
         await db();
@@ -32,15 +35,29 @@ import cors from 'cors';
         const app = express();
         app.use(cors());
         app.use(express.static('public'));
+        app.use(helmet({
+            ieNoOpen: false,
+            contentSecurityPolicy: false
+        }));
+        server.applyMiddleware({app,path: '/graphql'});
 
-        server.applyMiddleware({app});
+        process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+        if (process.env.NODE_ENV === 'production'){
+            console.log('production');
+            const { default: production } = await import('./security/production.js');
+            production(app, 3000);
+        } else{
+            console.log('localhost');
+            const { default: localhost } = await import('./security/localhost.js');
+            localhost(app, 8000, 3000);
+        }
 
-
+/*
         app.listen({port: 3000}, () =>
             console.log(
                 `🚀 Server ready at http://localhost:3000${server.graphqlPath}`),
         );
-
+*/
     } catch (e) {
         console.log('server error: ' + e.message);
     }
