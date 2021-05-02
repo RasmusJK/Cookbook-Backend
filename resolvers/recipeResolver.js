@@ -1,6 +1,12 @@
 import Recipe from '../models/recipe.js';
 import {AuthenticationError} from "apollo-server-express";
+import fs from 'fs';
+import path from 'path';
+import { GraphQLUpload } from 'graphql-upload';
 
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 
@@ -17,15 +23,59 @@ export default {
         }
 
     },
+
     Mutation: {
-        addRecipe: (parent, args,{user}) => {
+        addRecipe: async (parent, args,{user}) => {
             console.log('recipeResolver. addRecipe',args );
             if(!user){
                 throw new AuthenticationError('Not authenticated');
             }
 
-            const newRecipe = new Recipe(args);
-            return newRecipe.save()
+            try {
+                if (!args.File.File){
+                    console.log("without files",args);
+
+                    const newRecipe = new Recipe(args);
+                    return await newRecipe.save();
+                } else {
+
+               /*
+                    console.log("contains file",args);
+
+                    const { createReadStream, filename } = await args.File.File;
+                const stream = createReadStream();
+                const pathName = path.join(__dirname,`/../public/images/${filename}`);
+
+                await stream.pipe(fs.createWriteStream(pathName));
+                    const imageUrl = {
+                        url: `http://localhost:3000/images/${filename}`
+                    };
+                    let recipe = {...args, File: imageUrl.url};
+                    let newRecipe = new Recipe(recipe);
+                    return await newRecipe.save();
+*/
+                    console.log('addEntry args', args);
+
+                    let {filename, createReadStream} = await args.File.File;
+                    console.log(filename);
+                    const stream = createReadStream();
+                    const pathName = path.join(__dirname,`/../public/images/${filename}`);
+                    console.log('pathname', pathName);
+                    await stream.pipe(fs.createWriteStream(pathName));
+                    const photourl = {
+                        url: `http://localhost:3000/images/${filename}`
+                    };
+                    let entry = {...args, File: photourl.url};
+                    let newEntry = new Recipe(entry);
+                    const rslt = await newEntry.save();
+                    return rslt;
+                }
+
+            } catch (e){
+                throw new Error(e);
+            }
+
+
         }
     }
 

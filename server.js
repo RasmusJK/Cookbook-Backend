@@ -5,14 +5,16 @@ import resolvers from './resolvers/index.js';
 import express from 'express';
 import db from './db/db.js'
 import {checkAuth} from "./passport/authenticate.js";
-
+import cors from 'cors';
 (async () => {
     try {
         await db();
 
         const server = new ApolloServer({
+
             typeDefs: schemas,
             resolvers,
+
             context: async ({req, res}) => {
                 if (req) {
                     const user = await checkAuth(req, res);
@@ -28,6 +30,8 @@ import {checkAuth} from "./passport/authenticate.js";
         });
 
         const app = express();
+        app.use(cors());
+        app.use(express.static('public'));
 
         server.applyMiddleware({app});
 
