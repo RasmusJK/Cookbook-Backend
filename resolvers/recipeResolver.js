@@ -39,21 +39,7 @@ export default {
                     return await newRecipe.save();
                 } else {
 
-               /*
-                    console.log("contains file",args);
 
-                    const { createReadStream, filename } = await args.File.File;
-                const stream = createReadStream();
-                const pathName = path.join(__dirname,`/../public/images/${filename}`);
-
-                await stream.pipe(fs.createWriteStream(pathName));
-                    const imageUrl = {
-                        url: `http://localhost:3000/images/${filename}`
-                    };
-                    let recipe = {...args, File: imageUrl.url};
-                    let newRecipe = new Recipe(recipe);
-                    return await newRecipe.save();
-*/
 
                     let {filename, createReadStream} = await args.file.file;
                     const stream = createReadStream();
