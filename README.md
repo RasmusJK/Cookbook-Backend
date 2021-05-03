@@ -1,6 +1,6 @@
 # Cookbook-Backend
 
-Endpoint https://my-app-123.jelastic.metropolia.fi/
+Endpoint https://my-app-123.jelastic.metropolia.fi/graphql
 Needs bearer token from login to use mutations
 # Example queries
 
