@@ -39,7 +39,7 @@ query{recipe(id:"ID of some recipe"){recipeName id ingredients steps}}
 # Get recipes by user
 query{recipesByUser(author:"YourUsername"){id recipeName ingredients steps}}
 # Add recipe
-mutation{addRecipe(recipeName:"nuudelit8"
+mutation{addRecipe(recipeName:"SomeRecipeName"
   ingredients:["SomeIngredient"]
   steps:["SomeStep"]
 	author: "YourUsername"
