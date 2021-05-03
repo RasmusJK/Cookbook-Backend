@@ -43,8 +43,8 @@ export default {
 
                     let {filename, createReadStream} = await args.file.file;
                     const stream = createReadStream();
-                  //  const pathName = path.join(__dirname,`/../public/images/${filename}`);
-                    const pathName = path.join(`/home/jelastic/ROOT/public/images/${filename}`);
+                    const pathName = path.join(__dirname,`/../public/images/${filename}`); // Should work in jelastic
+                   // const pathName = path.join(`/home/jelastic/ROOT/public/images/${filename}`);
                     await stream.pipe(fs.createWriteStream(pathName));
                     const imageUrl = {
                        // url: `http://localhost:3000/images/${filename}`
