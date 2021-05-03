@@ -58,7 +58,7 @@ export default {
                     await stream.pipe(fs.createWriteStream(pathName));
                     const imageUrl = {
                       //  url: `http://localhost:3000/images/${randomFileName}`
-                        url: `https://my-app-123.jelastic.metropolia.fi/${randomFileName}`
+                        url: `https://my-app-123.jelastic.metropolia.fi/images/${randomFileName}`
                     };
                     let entry = {...args, file: imageUrl.url};
                     let newRecipe = new Recipe(entry);
