@@ -8,6 +8,16 @@ import {fileURLToPath} from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const  generateRandomString = (length)=> {
+    let result           = [];
+    let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result.push(characters.charAt(Math.floor(Math.random() *
+            charactersLength)));
+    }
+    return result.join('');
+}
 
 
 export default {
@@ -39,16 +49,16 @@ export default {
                     return await newRecipe.save();
                 } else {
 
-
-
                     let {filename, createReadStream} = await args.file.file;
+                    const {ext}= path.parse(filename);
+                  const randomFileName =generateRandomString(12) + ext
                     const stream = createReadStream();
-                    const pathName = path.join(__dirname,`/../public/images/${filename}`); // Should work in jelastic
+                    const pathName = path.join(__dirname,`/../public/images/${randomFileName}`); // Should work in jelastic
                    // const pathName = path.join(`/home/jelastic/ROOT/public/images/${filename}`);
                     await stream.pipe(fs.createWriteStream(pathName));
                     const imageUrl = {
-                       // url: `http://localhost:3000/images/${filename}`
-                        url: `https://my-app-123.jelastic.metropolia.fi/${filename}`
+                        url: `http://localhost:3000/images/${randomFileName}`
+                      //  url: `https://my-app-123.jelastic.metropolia.fi/${randomFileName}`
                     };
                     let entry = {...args, file: imageUrl.url};
                     let newRecipe = new Recipe(entry);
